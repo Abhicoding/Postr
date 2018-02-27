@@ -18,4 +18,13 @@ textarea {
 .addPost {
 	float: left;
 }
-.posted {}
+
+.posted {
+	font-family: "Slabo", Sans-serif;
+	font-size: 12px;
+	box-sizing: border-box;
+	border-width: 1px;
+	border-style: dashed;
+	margin: 1%;
+	padding: 1%;
+}
