@@ -1,0 +1,21 @@
+body {
+	width: 900px
+}
+h1 {
+	font-family: "Lobster", Sans-serif;
+	margin-left: 2%;
+}
+
+div {
+    margin-left: 1%;
+}
+
+textarea {
+	width: 720px;
+	height: 160px;
+}
+
+.addPost {
+	float: left;
+}
+.posted {}
