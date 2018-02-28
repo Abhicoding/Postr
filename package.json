@@ -1,0 +1,28 @@
+{
+  "name": "postr",
+  "version": "1.0.0",
+  "description": "Reddit like website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abhicoding/Postr.git"
+  },
+  "keywords": [
+    "Postr",
+    "Reddit",
+    "Content",
+    "Sharing"
+  ],
+  "author": "Abhishek Shingane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abhicoding/Postr/issues"
+  },
+  "homepage": "https://github.com/Abhicoding/Postr#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
