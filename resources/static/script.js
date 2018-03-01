@@ -16,5 +16,10 @@ btn.onclick = function () {
     div.appendChild(postText)
     body.appendChild(div)
     input.focus()
+
+    fetch('/posted', {
+      'method': 'post',
+      'body': myPost
+    })
   }
 }
