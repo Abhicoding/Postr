@@ -1,3 +1,6 @@
+fetch ('/posts', {})
+
+
 var input = document.querySelector('textarea')
 var btn = document.querySelector('button')
 var body = document.querySelector('body')

@@ -19,8 +19,17 @@ app.get('/', (req, res) => {
 
 app.post('/posted', (req, res) => {
   let key = randomKey.keygen()
-  client.set(key, req.body, redis.print)
-  	res.send()
+  client.hmset('posts', key, req.body, redis.print)
+  res.send()
+})
+
+app.post('/posted', (req, res) => {
+  client.hgetall('posts', async function (error, result) {
+    if (error) throw error
+    let store = await result
+    console.log('Got result ->', Object.values(store)/*[x]*/)
+  })
+  res.send()
 })
 
 app.listen(8000, function () {
@@ -31,10 +40,9 @@ client.on('error', function (err) {
   console.log('Something went wrong ', err)
 })
 
-client.get('post', function (error, result) {
-  if (error) throw error
-  console.log('GET result ->', result)
-})
+
+
+
 
 /*
 app.get('/getTime', function (req, res) {
