@@ -25,29 +25,14 @@ app.post('/posted', (req, res) => {
 })
 
 app.get('/postdata', (req, res) => {
-  console.log("received request for posts")
-  /*client.hgetall('posts', async function (error, result) {
+  client.hgetall('posts', function (error, result) {
     if (error) {
       throw error
     }
-    let store = await result
-    console.log('Got result ->', Object.values(res))
-  })*/
-  res.send('store')
-})
-/*
-app.post('/postdata', (req, res) => {
-  console.log("Second")
-  client.hgetall('posts', async function (error, result) {
-    if (error) {
-      throw error
-    }
-    let store = await result
-    console.log('Got result ->', Object.values(res)/*[x])
+    res.send(JSON.stringify(result))
   })
-  res.send()
 })
-*/
+
 app.listen(8000, function () {
   console.log('Example app listening on port 8000!')
 })
@@ -55,16 +40,6 @@ app.listen(8000, function () {
 client.on('error', function (err) {
   console.log('Something went wrong ', err)
 })
-
-/*app.post('/posted', (req, res) => {
-  client.hgetall('posts', (err, res) =>{
-    if (err){throw err}
-    let store = res
-    console.log('Got something', Object.values(res) )
-  })
-  res.send()
-})*/
-
 
 /*
 app.get('/getTime', function (req, res) {
