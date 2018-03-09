@@ -18,20 +18,36 @@ app.get('/', (req, res) => {
 })
 
 app.post('/posted', (req, res) => {
+  console.log('Third')
   let key = randomKey.keygen()
   client.hmset('posts', key, req.body, redis.print)
   res.send()
 })
 
-app.post('/posted', (req, res) => {
-  client.hgetall('posts', async function (error, result) {
-    if (error) throw error
+app.get('/postdata', (req, res) => {
+  console.log("received request for posts")
+  /*client.hgetall('posts', async function (error, result) {
+    if (error) {
+      throw error
+    }
     let store = await result
-    console.log('Got result ->', Object.values(store)/*[x]*/)
+    console.log('Got result ->', Object.values(res))
+  })*/
+  res.send('store')
+})
+/*
+app.post('/postdata', (req, res) => {
+  console.log("Second")
+  client.hgetall('posts', async function (error, result) {
+    if (error) {
+      throw error
+    }
+    let store = await result
+    console.log('Got result ->', Object.values(res)/*[x])
   })
   res.send()
 })
-
+*/
 app.listen(8000, function () {
   console.log('Example app listening on port 8000!')
 })
@@ -40,8 +56,14 @@ client.on('error', function (err) {
   console.log('Something went wrong ', err)
 })
 
-
-
+/*app.post('/posted', (req, res) => {
+  client.hgetall('posts', (err, res) =>{
+    if (err){throw err}
+    let store = res
+    console.log('Got something', Object.values(res) )
+  })
+  res.send()
+})*/
 
 
 /*

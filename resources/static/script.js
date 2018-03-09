@@ -1,4 +1,4 @@
-fetch ('/posts', {})
+alert(fetch ('/postdata'))
 
 
 var input = document.querySelector('textarea')
