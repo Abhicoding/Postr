@@ -10,7 +10,7 @@ const bodyParser = require('body-parser')
 const redis = require('redis')
 const client = redis.createClient()
 
-const session = require('express-session')
+// const session = require('express-session')
 
 app.use(express.static('resources/static'))
 app.use(bodyParser.text())
