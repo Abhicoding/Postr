@@ -1,14 +1,16 @@
-var express = require('express')
-var app = express()
+const express = require('express')
+const app = express()
 
-var path = require('path')
+const path = require('path')
 
-var randomKey = require('./utilities')
+const randomKey = require('./utilities')
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
-var redis = require('redis')
-var client = redis.createClient()
+const redis = require('redis')
+const client = redis.createClient()
+
+const session = require('express-session')
 
 app.use(express.static('resources/static'))
 app.use(bodyParser.text())
@@ -18,7 +20,6 @@ app.get('/', (req, res) => {
 })
 
 app.post('/posted', (req, res) => {
-  console.log('Third')
   let key = randomKey.keygen()
   client.hmset('posts', key, req.body, redis.print)
   res.send()
@@ -32,6 +33,13 @@ app.get('/postdata', (req, res) => {
     res.send(JSON.stringify(result))
   })
 })
+/*
+app.post('/login', (req, res) => {
+  req.session.username = req.body.username
+  req.session.password = req.body.password
+  console.log(req.session.username)
+  res.end('done')
+}) */
 
 app.listen(8000, function () {
   console.log('Example app listening on port 8000!')

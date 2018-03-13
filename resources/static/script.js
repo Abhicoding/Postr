@@ -2,18 +2,22 @@ const input = document.querySelector('textarea')
 const btn = document.querySelector('button')
 const body = document.querySelector('body')
 
-fetch ('/postdata').then((response) => response.json()).then((data) => createPosts(data));
+const login = document.querySelector('#login')
+const username = document.querySelector('#user')
+const password = document.querySelector('#password')
 
-function createPosts(data) {
+fetch('/postdata').then((response) => response.json()).then((data) => createPosts(data))
+
+function createPosts (data) {
   let div, postText
-  for (let x of Object.values(data)){
-      div = document.createElement('div')
-      div.setAttribute('class', 'posted')
-      postText = document.createElement('span')
-      postText.textContent = x
-      div.appendChild(postText)
-      body.appendChild(div)
-      input.focus()
+  for (let x of Object.values(data)) {
+    div = document.createElement('div')
+    div.setAttribute('class', 'posted')
+    postText = document.createElement('span')
+    postText.textContent = x
+    div.appendChild(postText)
+    body.appendChild(div)
+    input.focus()
   }
 }
 
@@ -29,4 +33,11 @@ btn.onclick = function () {
       'body': myPost
     })
   }
+}
+
+login.onclick = function () {
+  fetch('posted', {
+    'method': 'post',
+    'body': {'username': username, 'password': password}
+  })
 }

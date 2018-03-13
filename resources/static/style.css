@@ -4,7 +4,9 @@ body {
 
 h1 {
 	font-family: "Lobster", Sans-serif;
+	margin: 1%;
 	margin-left: 2%;
+	box-sizing: border-box;
 }
 
 div {
@@ -12,12 +14,16 @@ div {
 }
 
 textarea {
-	width: 720px;
+	width: 98%;
 	height: 160px;
+	margin-right: 2%;
 }
 
 .addPost {
 	float: left;
+	margin-left: 2%;
+	margin-top: 1%;
+	margin-bottom: 1%;
 }
 
 .posted {
@@ -28,4 +34,11 @@ textarea {
 	border-style: dashed;
 	margin: 1%;
 	padding: 1%;
+}
+
+.login {
+	box-sizing: border-box;
+	float: right;
+	margin: 1%;
+	margin-right: 2%;
 }
