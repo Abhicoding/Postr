@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 
 const path = require('path')
+const session = require('express-session')
 
 const randomKey = require('./utilities')
 
@@ -14,6 +15,8 @@ const client = redis.createClient()
 
 app.use(express.static('resources/static'))
 app.use(bodyParser.text())
+app.use(bodyParser.json())
+app.use(session({secret: 'testing'}))
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/resources/static/index.html'))
@@ -33,16 +36,16 @@ app.get('/postdata', (req, res) => {
     res.send(JSON.stringify(result))
   })
 })
-/*
+
 app.post('/login', (req, res) => {
+  console.log(req.body.username)
   req.session.username = req.body.username
   req.session.password = req.body.password
-  console.log(req.session.username)
   res.end('done')
-}) */
+})
 
-app.listen(8000, function () {
-  console.log('Example app listening on port 8000!')
+app.listen(8080, function () {
+  console.log('Example app listening on port 8080!')
 })
 
 client.on('error', function (err) {

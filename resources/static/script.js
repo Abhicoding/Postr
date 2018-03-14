@@ -1,11 +1,11 @@
 const input = document.querySelector('textarea')
 const btn = document.querySelector('button')
 const body = document.querySelector('body')
-/*
+
 const login = document.querySelector('#login')
 const username = document.querySelector('#user')
 const password = document.querySelector('#password')
-*/
+
 fetch('/postdata').then((response) => response.json()).then((data) => {
   if (data) {
     for (let x of Object.values(data)) {
@@ -38,10 +38,13 @@ btn.onclick = function () {
   }
 }
 
-/*
 login.onclick = function () {
-  fetch('posted', {
+  // alert(username.value)
+  fetch('login', {
     'method': 'post',
-    'body': {'username': username, 'password': password}
+    'headers': {
+      'Content-Type': 'application/json'
+    },
+    'body': JSON.stringify({'username': username.value, 'password': password.value})
   })
-} */
+}
