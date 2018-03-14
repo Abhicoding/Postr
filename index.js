@@ -48,6 +48,21 @@ app.get('/sign-up', (req, res) => {
   res.sendFile(path.join(__dirname + '/resources/static/sign-up.html'))
 })
 
+app.post('/check-email', (req, res) => {
+  client.hkeys('users', function (error, result) {
+    if (error) {
+      throw error
+    }
+    res.end(result.includes(req.body.email).toString())
+  })
+})
+
+app.post('/signed-up', (req, res) => {
+  console.log(req.body)
+  client.hmset('users', req.body.email, req.body.password, redis.print)
+  res.redirect('/')
+})
+
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!')
 })
