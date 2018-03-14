@@ -44,6 +44,10 @@ app.post('/login', (req, res) => {
   res.end('done')
 })
 
+app.get('/sign-up', (req, res) => {
+  res.sendFile(path.join(__dirname + '/resources/static/sign-up.html'))
+})
+
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!')
 })

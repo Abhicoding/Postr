@@ -14,6 +14,8 @@ fetch('/postdata').then((response) => response.json()).then((data) => {
   }
 })
 
+document.querySelector('.sign-up').href = 'http://localhost:8080/sign-up'
+
 function createPosts (data) {
   let div, postText
   div = document.createElement('div')

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign-up to Postr</title>
+	<style type="text/css">
+		div {
+			box-sizing: border-box;
+			margin: 1%;
+		}
+	</style>
+</head>
+<body>
+	<form class="sign-up">
+		<div class="email">
+			<label for="emailId">Enter your email address</label><br>
+			<input type="email" name="Email Id" autofocus placeholder="Email address">
+		</div>
+		<div class="password">
+			<label for="password">Enter a password</label><br>
+			<input type="password" name="" ="password" placeholder="Password" maxlength="16" onkeyup="check_pass()" id="password">
+		</div>
+		<div class="confirm-password">
+			<label for="confirm-password">Confirm password</label><br>
+			<input type="password" name="confirm-password" placeholder="Re-enter password" maxlength="16" onkeyup="check_pass()" id="confirm-password">
+		</div>
+		<div>
+			<button type="sign-up">Sign-up</button>
+		</div>
+	</form>
+	<script type="text/javascript">
+		function check_pass() {
+		console.log(document.getElementById('password').value,
+            document.getElementById('confirm-password').value)
+    if (document.getElementById('password').value ===
+            document.getElementById('confirm-password').value) {
+        document.querySelector('button').disabled = false;
+    } else {
+        document.querySelector('button').disabled = true;
+    }
+}
+	</script>
+</body>
+</html>
