@@ -18,21 +18,21 @@
 	</style>
 </head>
 <body>
-	<form class="sign-up" method="post" action="http://localhost:8080/signed-up">
+	<form class="sign-up" method="post" action="/signup">
 		<div class="email">
 			<label for="emailId">Enter your email address</label><br>
-			<input type="email" id= 'email' name="Email Id" autofocus placeholder="Email address" required onchange="check_email()">
+			<input type="email" id= 'email' name="email" autofocus placeholder="Email address" required>
 		</div>
 		<div class="password">
 			<label for="password">Enter a password</label><br>
-			<input type="password" id="password" name="" ="password" placeholder="Password" maxlength="16" onkeyup="check_pass()" required>
+			<input type="password" id="password" name ="password" placeholder="Password" maxlength="16" onkeyup="check_pass()" required>
 		</div>
 		<div class="confirm-password">
 			<label for="confirm-password">Confirm password</label><br>
-			<input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter password" maxlength="16" onkeyup="check_pass()" required>
+			<input type="password" id="confirm-password" name="" placeholder="Re-enter password" maxlength="16" onkeyup="check_pass()" required>
 		</div>
 		<div>
-			<button type="sign-up">Sign-up</button>
+			<button type="submit" >Sign-up</button>
 		</div>
 	</form>
 	<script type="text/javascript">
@@ -48,23 +48,6 @@
     		} else {
         		btn.disabled = true;
     		}
-		}
-
-		function check_email() {
-			fetch('check-email', {
-				'method': 'POST',
-				'headers': {
-					'Content-Type': 'application/json'
-				},
-				'body': JSON.stringify({'email': email.value})
-			}).then((response) => response.json()).then((data) => {
-				if (data === true) {
-					email.placeholder="Email already in use"
-					email.focus()
-				} else {
-					password.focus()
-				}
-			})
 		}
 	</script>
 </body>

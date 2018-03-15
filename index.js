@@ -16,6 +16,8 @@ const client = redis.createClient()
 app.use(express.static('resources/static'))
 app.use(bodyParser.text())
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
+
 app.use(session({secret: 'testing'}))
 
 app.get('/', (req, res) => {
@@ -44,23 +46,23 @@ app.post('/login', (req, res) => {
   res.end('done')
 })
 
-app.get('/sign-up', (req, res) => {
-  res.sendFile(path.join(__dirname + '/resources/static/sign-up.html'))
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname + '/resources/public/sign-up.html'))
 })
 
-app.post('/check-email', (req, res) => {
+app.post('/signup', (req, res) => {
+  console.log('received requests')
   client.hkeys('users', function (error, result) {
     if (error) {
       throw error
     }
-    res.end(result.includes(req.body.email).toString())
+    if (result.includes(req.body.email)) {
+      res.send('/signup')
+    } else {
+      client.hmset('users', req.body.email, req.body.password, redis.print)
+      res.redirect('/')
+    }
   })
-})
-
-app.post('/signed-up', (req, res) => {
-  console.log(req.body)
-  client.hmset('users', req.body.email, req.body.password, redis.print)
-  res.redirect('/')
 })
 
 app.listen(8080, function () {
