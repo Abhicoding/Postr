@@ -26,7 +26,8 @@ app.get('/', (req, res) => {
 
 app.post('/posted', (req, res) => {
   let key = randomKey.keygen()
-  client.hmset('posts', key, req.body, redis.print)
+  console.log(req.body.post)
+  client.hmset('posts', key, req.body.post, redis.print)
   res.send()
 })
 
@@ -40,18 +41,34 @@ app.get('/postdata', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  console.log(req.body.username)
-  req.session.username = req.body.username
-  req.session.password = req.body.password
-  res.end('done')
+  client.hkeys('users', (error, result) => {
+    if (error) {
+      throw error
+    }
+    if (result.includes(req.body.username)) {
+      client.hget('users', req.body.username, (error, result) => {
+        if (error) {
+          throw error
+        }
+        if (result == req.body.password) {
+          res.redirect('/')
+        } else {
+          res.redirect('/signup')
+        }
+      })
+    }
+  })
+  // req.session.username = req.body.username
+  // req.session.password = req.body.password
+  // res.end('done')
 })
 
 app.get('/signup', (req, res) => {
+  console.log('received requests')
   res.sendFile(path.join(__dirname + '/resources/public/sign-up.html'))
 })
 
 app.post('/signup', (req, res) => {
-  console.log('received requests')
   client.hkeys('users', function (error, result) {
     if (error) {
       throw error

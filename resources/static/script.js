@@ -1,9 +1,9 @@
 const input = document.querySelector('textarea')
-const btn = document.querySelector('button')
+const btn = document.querySelector('#post-submit')
 const body = document.querySelector('body')
 
 const login = document.querySelector('#login')
-const username = document.querySelector('#user')
+const username = document.querySelector('#username')
 const password = document.querySelector('#password')
 
 fetch('/postdata').then((response) => response.json()).then((data) => {
@@ -14,7 +14,7 @@ fetch('/postdata').then((response) => response.json()).then((data) => {
   }
 })
 
-document.querySelector('.sign-up').href = 'http://localhost:8080/sign-up'
+document.querySelector('a').href = 'http://localhost:8080/signup'
 
 function createPosts (data) {
   let div, postText
@@ -26,7 +26,9 @@ function createPosts (data) {
   body.appendChild(div)
 }
 
-btn.onclick = function () {
+// console.log(btn)
+
+btn.onsubmit = function () {
   let temp = input.value.match(/^\s+(.*)/)
   input.value = temp ? temp[1] : input.value
   if (input.value) {
