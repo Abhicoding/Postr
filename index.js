@@ -11,22 +11,33 @@ const bodyParser = require('body-parser')
 const redis = require('redis')
 const client = redis.createClient()
 
-// const session = require('express-session')
-
-app.use(express.static('resources/static'))
+// app.use(express.static('resources/static/'))
 app.use(bodyParser.text())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 
-app.use(session({secret: 'testing'}))
+app.use(session({secret: 'testing', resave: false, saveUninitialized: true}))
+
+app.get('/home', (req, res) => {
+  console.log(req.session.email + '/home')
+  if (!req.session.email) {
+    res.sendFile(path.join(__dirname + '/resources/public/home.html'))
+  } else {
+    res.redirect('/')
+  }
+})
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/resources/static/index.html'))
+  console.log('here is it/', req.session.email)
+  if (req.session.email) {
+    res.sendFile(path.join(__dirname + '/resources/static/index.html'))
+  } else {
+    res.redirect('/home')
+  }
 })
 
 app.post('/posted', (req, res) => {
   let key = randomKey.keygen()
-  console.log(req.body.post)
   client.hmset('posts', key, req.body.post, redis.print)
   res.send()
 })
@@ -40,32 +51,44 @@ app.get('/postdata', (req, res) => {
   })
 })
 
+app.get('/login', (req, res) => {
+  console.log(req.session.email)
+  if (req.session.email) {
+    res.redirect('/')
+  } else {
+    res.sendFile(path.join(__dirname + '/resources/public/login.html'))
+  }
+})
+
 app.post('/login', (req, res) => {
   client.hkeys('users', (error, result) => {
     if (error) {
       throw error
     }
-    if (result.includes(req.body.username)) {
-      client.hget('users', req.body.username, (error, result) => {
+    if (result.includes(req.body.email)) {
+      client.hget('users', req.body.email, (error, result) => {
         if (error) {
           throw error
         }
         if (result == req.body.password) {
+          req.session.email = req.body.email
           res.redirect('/')
         } else {
-          res.redirect('/signup')
+          res.redirect('/login')
         }
       })
     }
   })
-  // req.session.username = req.body.username
   // req.session.password = req.body.password
   // res.end('done')
 })
 
 app.get('/signup', (req, res) => {
-  console.log('received requests')
-  res.sendFile(path.join(__dirname + '/resources/public/sign-up.html'))
+  if (req.session.email) {
+    res.redirect('/')
+  } else {
+    res.sendFile(path.join(__dirname + '/resources/public/sign-up.html'))
+  }
 })
 
 app.post('/signup', (req, res) => {
@@ -74,13 +97,15 @@ app.post('/signup', (req, res) => {
       throw error
     }
     if (result.includes(req.body.email)) {
-      res.send('/signup')
+      res.redirect('/signup')
     } else {
       client.hmset('users', req.body.email, req.body.password, redis.print)
       res.redirect('/')
     }
   })
 })
+
+// app.get('/logout',(req, res) => {})
 
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!')
@@ -89,11 +114,3 @@ app.listen(8080, function () {
 client.on('error', function (err) {
   console.log('Something went wrong ', err)
 })
-
-/*
-app.get('/getTime', function (req, res) {
-  //let time = String(Date.now())
-  // console.log(time)
-  res.send(time)
-  // res.sendFile(path.join(__dirname + '/resources/static/index.html'))
-}) */

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome to Postr</title>
+	<link href="https://fonts.googleapis.com/css?family=Lobster|Slabo" rel="stylesheet">
+	<style type="text/css">
+		body {
+		width: 70%;
+		position: fixed;
+		left: 15%;
+		}
+		h1 {
+		font-family: "Lobster", Sans-serif;
+		margin: 1% 1% 1% 3%;
+		box-sizing: border-box;
+		}
+		input {
+			width: 10%;
+			margin: 0.5%;
+		}
+	</style>
+</head>
+<body>
+	<h1>Postr</h1>
+	<div>
+		<div>
+			<form method="get" action="/login">
+				<label>Login if you are existing user</label><br>
+				<input class="login" type="submit" name="login" value="Login">
+			</form>
+		</div>
+			<div>
+				<form method="get" action="/signup">
+					<label>Sign-up if you are new user</label><br>
+					<input class="signup" type="submit" name="signup" value="Sign-up">
+				</form>
+			</div>
+		</div>
+</body>
+</html>

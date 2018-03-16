@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Lobster|Slabo" rel="stylesheet">
 	<title>Sign-up to Postr</title>
 	<style type="text/css">
+		h1 {
+		font-family: "Lobster", Sans-serif;
+		margin: 1% 1% 1% 3%;
+		box-sizing: border-box;
+		}
 		div {
 			box-sizing: border-box;
 			margin: 1%;
@@ -18,6 +24,7 @@
 	</style>
 </head>
 <body>
+	<h1>Postr</h1>
 	<form class="sign-up" method="post" action="/signup">
 		<div class="email">
 			<label for="emailId">Enter your email address</label><br>
@@ -36,7 +43,6 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		const email = document.getElementById('email')
 		const password = document.getElementById('password')
 		const confirmPassword = document.getElementById('confirm-password')
 		const btn = document.querySelector('button')

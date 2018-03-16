@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login to Postr</title>
+	<link href="https://fonts.googleapis.com/css?family=Lobster|Slabo" rel="stylesheet">
+	<style type="text/css">
+		body {
+		width: 70%;
+		position: fixed;
+		left: 15%;
+		}
+		h1 {
+		font-family: "Lobster", Sans-serif;
+		margin: 1% 1% 1% 3%;
+		box-sizing: border-box;
+		}
+		.login {
+		box-sizing: border-box;
+		float: left;
+		margin: 1% 1% 1%;
+		}
+	</style>
+</head>
+<body>
+	<h1>Postr</h1>
+	<form for="login" class = "login" method="post" action="/login">
+    <input id = "email" name="email" type="email" placeholder="Email Id" required>
+    <input id = "password" name="password" type="password" placeholder="Password" required>
+    <input id="login" type="submit" value="Login">
+    <a href="/signup">Sign-up</a>
+  </form>
+</body>
+</html>

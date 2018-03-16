@@ -1,5 +1,7 @@
 body {
-	width: 900px
+	width: 70%;
+	position: fixed;
+	left: 15%;
 }
 
 h1 {
@@ -42,10 +44,4 @@ textarea {
 	border-style: dashed;
 	margin: 1% 1% 1% 3%;  
 	padding: 1%;
-}
-
-.login {
-	box-sizing: border-box;
-	float: right;
-	margin: 1% 1% 1%;
 }
