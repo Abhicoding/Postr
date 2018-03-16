@@ -11,15 +11,17 @@ const bodyParser = require('body-parser')
 const redis = require('redis')
 const client = redis.createClient()
 
-// app.use(express.static('resources/static/'))
+const bcrypt = require('bcrypt')
+const saltRounds = 10
+
+app.use(express.static('resources/static/'))
+app.use(session({secret: 'testing', resave: false, saveUninitialized: true}))
+
 app.use(bodyParser.text())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 
-app.use(session({secret: 'testing', resave: false, saveUninitialized: true}))
-
 app.get('/home', (req, res) => {
-  console.log(req.session.email + '/home')
   if (!req.session.email) {
     res.sendFile(path.join(__dirname + '/resources/public/home.html'))
   } else {
@@ -28,18 +30,29 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  console.log('here is it/', req.session.email)
   if (req.session.email) {
-    res.sendFile(path.join(__dirname + '/resources/static/index.html'))
+    res.sendFile(path.join(__dirname + '/resources/public/index.html'))
   } else {
     res.redirect('/home')
   }
 })
 
+app.get('/api/me', (req, res) => {
+  if (req.session.email) {
+    res.json({'status': 'success', 'email': req.session.email})
+  } else {
+    res.json({'status': 'failure'})
+  }
+})
+
 app.post('/posted', (req, res) => {
-  let key = randomKey.keygen()
-  client.hmset('posts', key, req.body.post, redis.print)
-  res.send()
+  if (req.session.email) {
+    let key = randomKey.keygen()
+    client.hmset('posts', key, req.body.post, redis.print)
+    res.redirect('/')
+  } else {
+    res.redirect('/home')
+  }
 })
 
 app.get('/postdata', (req, res) => {
@@ -52,7 +65,6 @@ app.get('/postdata', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  console.log(req.session.email)
   if (req.session.email) {
     res.redirect('/')
   } else {
@@ -70,17 +82,20 @@ app.post('/login', (req, res) => {
         if (error) {
           throw error
         }
-        if (result == req.body.password) {
-          req.session.email = req.body.email
-          res.redirect('/')
-        } else {
-          res.redirect('/login')
-        }
+        bcrypt.compare(req.body.password, result, (err, result) => {
+          if (err) {
+            throw err
+          }
+          if (result) {
+            req.session.email = req.body.email
+            res.redirect('/')
+          } else {
+            res.redirect('/login')
+          }
+        })
       })
     }
   })
-  // req.session.password = req.body.password
-  // res.end('done')
 })
 
 app.get('/signup', (req, res) => {
@@ -99,13 +114,21 @@ app.post('/signup', (req, res) => {
     if (result.includes(req.body.email)) {
       res.redirect('/signup')
     } else {
-      client.hmset('users', req.body.email, req.body.password, redis.print)
-      res.redirect('/')
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        if (err) {
+          throw err
+        }
+        client.hmset('users', req.body.email, hash, redis.print)
+        res.redirect('/login')
+      })
     }
   })
 })
 
-// app.get('/logout',(req, res) => {})
+app.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/home')
+})
 
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!')
