@@ -6,8 +6,9 @@ const welcomeDiv = document.querySelector('.welcome')
 
 fetch('/postdata').then((response) => response.json()).then((data) => {
   if (data) {
-    for (let x of Object.values(data)) {
-      createPosts(JSON.parse(x))
+    for (let x in data) {
+      console.log(x, JSON.parse(data[x]))
+      createPosts(x, JSON.parse(data[x]))
     }
   }
 })
@@ -18,7 +19,7 @@ const userEmail = fetch('/api/me', {credentials: 'same-origin'}).then((response)
   return data.email
 })
 
-function createPosts (data) {
+function createPosts (key, data) {
   let div, postText
   div = document.createElement('div')
   div1 = document.createElement('div')
@@ -26,15 +27,20 @@ function createPosts (data) {
   div2 = document.createElement('div')
   div3 = document.createElement('div')
   postText = document.createElement('span')
-  dbutton = document.createElement('a')
+  dbutton = document.createElement('button')
+
   div.setAttribute('class', 'postblock')
   div1.setAttribute('class', 'postuser')
   div2.setAttribute('class', 'posted')
   div3.setAttribute('class', 'buttons')
-  dbutton.setAttribute('class', 'dbutton')
+  dbutton.setAttribute('onclick', 'deletereq(this.id)')
+  dbutton.setAttribute('id', `${key}`)
+
   dbutton.textContent = 'delete'
+
   user.textContent = data.user + ' : '
   postText.textContent = data.post
+
   div1.appendChild(user)
   div2.appendChild(postText)
   div3.appendChild(dbutton)
@@ -69,4 +75,14 @@ btn.onsubmit = function () {
     input.value = ''
     input.focus()
   }
+}
+
+function deletereq (input) {
+  window.location.reload()
+  fetch('/deletepost', {
+    'credentials': 'same-origin',
+    'method': 'post',
+    'body': `${input}`
+  })
+  return false
 }

@@ -127,10 +127,10 @@ app.get('/postdata', (req, res) => {
   })
 })
 
-app.get('/deletepost', (req, res) => {
+app.post('/deletepost', (req, res) => {
   if (req.session.email) {
-    console.log(res.body)
-    // client.hdel('posts', key)
+    console.log('success')
+    client.hdel('posts', req.body)
     res.redirect('/')
   } else {
     res.redirect('/home')
