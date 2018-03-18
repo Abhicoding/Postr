@@ -30,9 +30,6 @@ a {
 	margin-left: 2%;
 }
 
-.sign-up {
-	float: right;
-}
 
 .addPost {
 	float: left;
@@ -42,13 +39,25 @@ a {
 }
 
 .postblock {
+	float: left;
 	font-family: "Slabo", Sans-serif;
 	font-size: 12px;
 	box-sizing: border-box;
 	border-width: 1px;
 	border-style: dashed;
-	margin: 1% 1% 1% 2%;
+	margin: 1% 0% 1% 2%;
 	padding: 0.5%;
+	width: 97%;
+}
+
+.buttons {
+	box-sizing: border-box;
+	float: right;
+}
+
+.buttons a {
+	font-weight: bold;
+	color: #961C00;
 }
 
 .user {
@@ -68,8 +77,4 @@ a {
 
 .postuser span {
 	font-weight: bold;
-}
-
-.posted { 
-	padding: 0.5%;
 }

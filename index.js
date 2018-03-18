@@ -127,6 +127,16 @@ app.get('/postdata', (req, res) => {
   })
 })
 
+app.get('/deletepost', (req, res) => {
+  if (req.session.email) {
+    console.log(res.body)
+    // client.hdel('posts', key)
+    res.redirect('/')
+  } else {
+    res.redirect('/home')
+  }
+})
+
 app.get('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/home')
