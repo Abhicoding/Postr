@@ -7,7 +7,7 @@ const welcomeDiv = document.querySelector('.welcome')
 fetch('/postdata').then((response) => response.json()).then((data) => {
   if (data) {
     for (let x of Object.values(data)) {
-      createPosts(x)
+      createPosts(JSON.parse(x))
     }
   }
 })
@@ -20,11 +20,21 @@ const userEmail = fetch('/api/me', {credentials: 'same-origin'}).then((response)
 
 function createPosts (data) {
   let div, postText
+  console.log(data)
   div = document.createElement('div')
-  div.setAttribute('class', 'posted')
+  div1 = document.createElement('div')
+  user = document.createElement('span')
+  div2 = document.createElement('div')
   postText = document.createElement('span')
-  postText.textContent = data
-  div.appendChild(postText)
+  div.setAttribute('class', 'postblock')
+  div1.setAttribute('class', 'postuser')
+  div2.setAttribute('class', 'posted')
+  user.textContent = data.user + ' : '
+  postText.textContent = data.post
+  div1.appendChild(user)
+  div2.appendChild(postText)
+  div.appendChild(div1)
+  div.appendChild(div2)
   page.appendChild(div)
 }
 

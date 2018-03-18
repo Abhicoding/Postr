@@ -15,7 +15,7 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 app.use(express.static('resources/static/'))
-app.use(session({secret: 'testing', resave: false, saveUninitialized: true}))
+app.use(session({secret: 'testing', resave: false, saveUninitialized: false}))
 
 app.use(bodyParser.text())
 app.use(bodyParser.json())
@@ -27,41 +27,6 @@ app.get('/home', (req, res) => {
   } else {
     res.redirect('/')
   }
-})
-
-app.get('/', (req, res) => {
-  if (req.session.email) {
-    res.sendFile(path.join(__dirname + '/resources/public/index.html'))
-  } else {
-    res.redirect('/home')
-  }
-})
-
-app.get('/api/me', (req, res) => {
-  if (req.session.email) {
-    res.json({'status': 'success', 'email': req.session.email})
-  } else {
-    res.json({'status': 'failure'})
-  }
-})
-
-app.post('/posted', (req, res) => {
-  if (req.session.email) {
-    let key = randomKey.keygen()
-    client.hmset('posts', key, req.body.post, redis.print)
-    res.redirect('/')
-  } else {
-    res.redirect('/home')
-  }
-})
-
-app.get('/postdata', (req, res) => {
-  client.hgetall('posts', function (error, result) {
-    if (error) {
-      throw error
-    }
-    res.send(JSON.stringify(result))
-  })
 })
 
 app.get('/login', (req, res) => {
@@ -122,6 +87,43 @@ app.post('/signup', (req, res) => {
         res.redirect('/login')
       })
     }
+  })
+})
+
+app.get('/', (req, res) => {
+  if (req.session.email) {
+    res.sendFile(path.join(__dirname + '/resources/public/index.html'))
+  } else {
+    res.redirect('/home')
+  }
+})
+
+app.get('/api/me', (req, res) => {
+  if (req.session.email) {
+    res.json({'status': 'success', 'email': req.session.email})
+  } else {
+    res.json({'status': 'failure'})
+  }
+})
+
+app.post('/posted', (req, res) => {
+  if (req.session.email) {
+    let key = randomKey.keygen(), json = {}
+    json.user = req.session.email
+    json.post = req.body.post
+    client.hmset('posts', key, JSON.stringify(json), redis.print)
+    res.redirect('/')
+  } else {
+    res.redirect('/home')
+  }
+})
+
+app.get('/postdata', (req, res) => {
+  client.hgetall('posts', function (error, result) {
+    if (error) {
+      throw error
+    }
+    res.json(result)
   })
 })
 

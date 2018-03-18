@@ -41,14 +41,14 @@ a {
 	margin-bottom: 1%;
 }
 
-.posted {
+.postblock {
 	font-family: "Slabo", Sans-serif;
 	font-size: 12px;
 	box-sizing: border-box;
 	border-width: 1px;
 	border-style: dashed;
 	margin: 1% 1% 1% 2%;
-	padding: 1%;
+	padding: 0.5%;
 }
 
 .user {
@@ -64,4 +64,12 @@ a {
 	margin-right: 1%;
 	padding-right: 1%;
 	box-sizing: content-box;
+}
+
+.postuser span {
+	font-weight: bold;
+}
+
+.posted { 
+	padding: 0.5%;
 }
