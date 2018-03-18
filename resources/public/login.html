@@ -11,19 +11,17 @@
 		}
 		h1 {
 		font-family: "Lobster", Sans-serif;
-		margin: 5% 1% 10% 3%;
+		margin: 5% 1% 8% 1%;
 		box-sizing: border-box;
 		text-align: center;
 		}
 		.login {
 		text-align: center;
 		box-sizing: border-box;
-		float: left;
 		margin: 1% 1% 1%;
 		}
 		form {
-			position: relative;
-			left: 20%;
+			text-align: center;
 		}
 		input {
 			margin: 1%;
@@ -32,11 +30,13 @@
 </head>
 <body>
 	<h1>Postr</h1>
-	<form for="login" class = "login" method="post" action="/login">
-    <input id = "email" name="email" type="email" placeholder="Email Id" required>
-    <input id = "password" name="password" type="password" placeholder="Password" required>
-    <input id="login" type="submit" value="Login">
-    <a href="/signup">Sign-up</a>
+	<form for="login" class = "login" method="post" action="/login"><br>
+    <input id = "email" name="email" type="email" placeholder="Email Id" required><br>
+    <input id = "password" name="password" type="password" placeholder="Password" required><br>
+    <input id="login" type="submit" value="Login"><br>
+    <div>	
+    	<a href="/signup">Sign-up</a>
+    </div>
   </form>
 </body>
 </html>
